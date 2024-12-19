@@ -446,7 +446,7 @@ class VoicePipelineAgent(utils.EventEmitter[EventTypes]):
         await self._track_published_fut
 
         call_ctx = None
-        fnc_source: str | AsyncIterable[str] | None = None
+        # fnc_source: str | AsyncIterable[str] | None = None
         if add_to_chat_ctx:
             try:
                 call_ctx = AgentCallContext.get_current()
@@ -808,6 +808,7 @@ class VoicePipelineAgent(utils.EventEmitter[EventTypes]):
             collected_text
             and speech_handle.add_to_chat_ctx
             and (not user_question or speech_handle.user_committed)
+            and not is_using_tools
         ):
             if speech_handle.extra_tools_messages:
                 self._chat_ctx.messages.extend(speech_handle.extra_tools_messages)
