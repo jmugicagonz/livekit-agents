@@ -115,17 +115,6 @@ def _build_gemini_ctx(
             current_role = role
             parts = []
 
-        if msg.tool_calls:
-            for fnc in msg.tool_calls:
-                parts.append(
-                    types.Part(
-                        function_call=types.FunctionCall(
-                            name=fnc.function_info.name,
-                            args=fnc.arguments,
-                        )
-                    )
-                )
-
         if msg.role == "tool":
             if msg.content:
                 if isinstance(msg.content, dict):
@@ -158,6 +147,17 @@ def _build_gemini_ctx(
                             parts.append(types.Part(text=item))
                         elif isinstance(item, llm.ChatImage):
                             parts.append(_build_gemini_image_part(item, cache_key))
+                            
+            if msg.tool_calls:
+              for fnc in msg.tool_calls:
+                  parts.append(
+                      types.Part(
+                          function_call=types.FunctionCall(
+                              name=fnc.function_info.name,
+                              args=fnc.arguments,
+                          )
+                      )
+                  )
 
     # Finalize last role's parts if any remain
     if current_role is not None and parts:
