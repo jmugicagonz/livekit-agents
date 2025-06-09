@@ -58,6 +58,7 @@ class TTS(tts.TTS):
         location: str = "global",
         credentials_info: NotGivenOr[dict] = NOT_GIVEN,
         credentials_file: NotGivenOr[str] = NOT_GIVEN,
+        volume_gain_db: float = 0.0,
     ) -> None:
         """
         Create a new instance of Google TTS.
@@ -77,6 +78,7 @@ class TTS(tts.TTS):
             speaking_rate (float, optional): Speed of speech. Default is 1.0.
             credentials_info (dict, optional): Dictionary containing Google Cloud credentials. Default is None.
             credentials_file (str, optional): Path to the Google Cloud credentials JSON file. Default is None.
+            volume_gain_db (float, optional): Volume gain in decibels. Default is 0.0. Volume gain (in dB) of the normal native volume supported by the specific voice, in the range [-96.0, 16.0]. If unset, or set to a value of 0.0 (dB), will play at normal native signal amplitude. A value of -6.0 (dB) will play at approximately half the amplitude of the normal native signal amplitude. A value of +6.0 (dB) will play at approximately twice the amplitude of the normal native signal amplitude. Strongly recommend not to exceed +10 (dB) as there's usually no effective increase in loudness for any value greater than that.
         """  # noqa: E501
 
         super().__init__(
@@ -110,6 +112,7 @@ class TTS(tts.TTS):
                 pitch=pitch,
                 effects_profile_id=effects_profile_id,
                 speaking_rate=speaking_rate,
+                volume_gain_db=volume_gain_db,
             ),
         )
 
